@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Hayley Tymony">
+  <title>Bear Ninja Hunter - Prototype 3</title>
+</head>
+<body>
+  <p id="demo">The game results will appear here.</p>
+
+  <script>
+    // Declare and initialize constants and variables
+    const gameChoices = ["Bear", "Ninja", "Hunter"]; // Game options stored in array
+    let userName = ""; // Will store player's name
+    let playAgain = true; // Control the game loop
+
+    while (playAgain) {
+      // Prompt player for name
+      userName = prompt("Welcome to Bear Ninja Hunter! Enter if you dare. To continue, please enter your name:");
+      
+      // Handle cancel or empty input for name
+      if (userName === null || userName.trim() === "") {
+        alert("Game canceled. Please refresh the page to play again.");
+        break;
+      }
+
+      // Greet player
+      alert("Welcome " + userName + "! Prepare to battle...");
+
+      // Prompt player for game choice
+      let playerChoice = prompt("Choose Bear, Ninja, or Hunter:");
+
+      // Check for cancel or empty input
+      if (playerChoice === null || playerChoice.trim() === "") {
+        alert("Invalid input! You must type Bear, Ninja, or Hunter exactly.");
+        break;
+      }
+
+      // Force case to Title Case
+      playerChoice = playerChoice.trim().toLowerCase();
+      playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
+
+      // Validate input
+      if (!gameChoices.includes(playerChoice)) {
+        alert("Invalid input! You must type Bear, Ninja, or Hunter exactly.");
+        break;
+      }
+
+      // Randomize computer choice
+      let randomIndex = Math.floor(Math.random() * gameChoices.length); // Using .length
+      let computerChoice = gameChoices[randomIndex];
+
+      // Determine game result
+      let resultMessage = "";
+      if (playerChoice === computerChoice) {
+        resultMessage = "It's a tie!";
+      } else if (
+        (playerChoice === "Bear" && computerChoice === "Ninja") ||
+        (playerChoice === "Ninja" && computerChoice === "Hunter") ||
+        (playerChoice === "Hunter" && computerChoice === "Bear")
+      ) {
+        resultMessage = "You win!";
+      } else {
+        resultMessage = "Computer wins!";
+      }
+
+      // Construct final message
+      let finalMessage = userName + ", you chose " + playerChoice + ", and the computer chose " + computerChoice + ". " + resultMessage;
+
+      // Display results using two methods
+      document.getElementById("demo").innerHTML = finalMessage;
+      console.log(finalMessage);
+      alert(finalMessage);
+
+      // Ask to play again
+      let again = prompt("Do you want to play again? Type Yes or No.");
+      if (again === null || again.trim().toLowerCase() !== "yes") {
+        alert("Thanks for playing, " + userName + "! Refresh the page to start over.");
+        playAgain = false;
+      }
+    }
+  </script>
+</body>
+</html>
